@@ -1,5 +1,10 @@
 # Topik 4 – Sistem Kompresi Data Sederhana
 
+## Cara menggunakan
+1. Sumber txt berasal dari "input/txt" 
+2. Ganti/masukkan file "input.txt" lalu run seperti biasa
+
+
 ## Latar Belakang
 Dalam industri modern, perusahaan harus mengelola volume data teks yang terus meningkat, seperti:
 
