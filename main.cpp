@@ -117,6 +117,21 @@ void huffmanCodes(const unordered_map<char, string> &huffmanCode)
     }
 }
 
+void hitungMemoriText(const string &text)
+{
+    size_t memori = text.size() * sizeof(char);
+    cout << "Ukuran memori yang digunakan untuk string asli: " << memori << " bytes\n";
+}
+
+void hitungMemoriEncoded(const string &encoded)
+{
+    size_t jumlahBit = encoded.size();
+    size_t estimasiByte = (jumlahBit + 7) / 8;
+
+    cout << "Panjang hasil kompresi: " << jumlahBit << " bit\n";
+    cout << "Estimasi ukuran hasil kompresi: " << estimasiByte << " bytes\n";
+}
+
 void HuffmanTree(string filename)
 {
     // Read text from file
@@ -136,6 +151,8 @@ void HuffmanTree(string filename)
         cout << "Input string kosong.\n";
         return;
     }
+
+    hitungMemoriText(text);
 
     unordered_map<char, int> freq;
     hitungFrekuensi(text, freq);
@@ -173,12 +190,14 @@ void HuffmanTree(string filename)
     cout << "\nEncoded string is :\n"
          << str << '\n';
 
-    int index = -1;
-    cout << "\nDecoded string is: \n";
-    while (index < (int)str.size() - 2)
-    {
-        decode(root, index, str);
-    }
+    // int index = -1;
+    // cout << "\nDecoded string is: \n";
+    // while (index < (int)str.size() - 2)
+    // {
+    //     decode(root, index, str);
+    // }
+
+    hitungMemoriEncoded(str);
 }
 
 int main()
