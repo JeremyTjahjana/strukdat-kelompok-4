@@ -2,6 +2,7 @@
 #include <string>
 #include <queue>
 #include <unordered_map>
+#include <fstream>
 using namespace std;
 
 // Kompresi menggunakan algoritma Huffman
@@ -116,8 +117,26 @@ void huffmanCodes(const unordered_map<char, string> &huffmanCode)
     }
 }
 
-void HuffmanTree(string text)
+void HuffmanTree(string filename)
 {
+    // Read text from file
+    ifstream file(filename);
+    if (!file.is_open())
+    {
+        cout << "File tidak dapat dibuka: " << filename << "\n";
+        return;
+    }
+
+    string text((istreambuf_iterator<char>(file)),
+                istreambuf_iterator<char>());
+    file.close();
+
+    if (text.empty())
+    {
+        cout << "Input string kosong.\n";
+        return;
+    }
+
     unordered_map<char, int> freq;
     hitungFrekuensi(text, freq);
     priority_queue<Node *, vector<Node *>, compare> pq;
@@ -125,13 +144,13 @@ void HuffmanTree(string text)
 
     if (pq.empty())
     {
-        cout << "Input string kosong.\n";
+        cout << "Tidak ada karakter untuk dikompresi.\n";
         return;
     }
 
     buatTree(pq);
 
-    // root stores pointer to root of Huffman Tree
+    // menyimpan root Huffman Tree
     Node *root = pq.top();
 
     // Laksanakan algoritma Huffman untuk menghasilkan kode Huffman untuk setiap karakter dan menyimpannya dalam sebuah map (unordered_map) yang mengaitkan karakter dengan kode biner yang dihasilkan.
@@ -164,67 +183,6 @@ void HuffmanTree(string text)
 
 int main()
 {
-    string text = R"(Kampus terbaik inspirasi
-tebarkan harapan
-Kampus terbaik inovasi wujudkan impian
-Kampus terbaik integritas kuatkan tujuan
-Kampus terbaik beri terbaik
-untuk negeri, untuk dunia
-Umat manusia dan alam semesta
-
-Mari bersama hadirkan masa depan
-Dalam langkah dan pikiran
-agar selalu terdepan
-Berbekal ilmu dan jiwa pengabdian
-Deras arus zaman tak kan tertahan
-Majulah melangkah
-Oh Majulah
-
-Kampus terbaik inspirasi
-tebarkan harapan
-Kampus terbaik inovasi wujudkan impian
-Kampus terbaik integritas kuatkan tujuan
-Kampus terbaik beri terbaik
-untuk negeri, untuk dunia
-Umat manusia dan alam semesta
-
-Mari bersama hadirkan masa depan
-Dalam langkah dan pikiran
-agar selalu terdepan
-Berbekal ilmu dan jiwa pengabdian
-Deras arus zaman tak kan tertahan
-Majulah melangkah
-
-Oh Majulah
-
-Terus berpacu dalam keunggulan
-Lincah pembelajar tuk kehidupan
-Inilah semangat baru
-Tekad raih kesempatan
-Wujudkan Kampus Terbaik Selamanya
-Hu….
-
-Mari bersama hadirkan masa depan
-Dalam langkah dan pikiran
-agar selalu terdepan
-Berbekal ilmu dan jiwa pengabdian
-Deras arus zaman tak kan tertahan
-Majulah melangkah
-
-Mari bersama hadirkan masa depan
-Dalam langkah dan pikiran
-agar selalu terdepan
-Berbekal ilmu dan jiwa pengabdian
-Deras arus zaman tak kan tertahan
-Majulah melangkah
-Oh Majulah
-
-Wujudkan Kampus Terbaik Selamanya
-Wujudkan Kampus Terbaik Selamanya
-Wujudkan Kampus Terbaik Selamanya
-Wujudkan Kampus Terbaik Selamanya….)";
-
-    HuffmanTree(text);
-
+    HuffmanTree("input.txt");
     return 0;
 }
